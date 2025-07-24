@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://cune83acw67cj"]
+
+[ext_resource type="Script" uid="uid://d176m2fg8m55a" path="res://Room/Room.gd" id="1_63o6j"]
+[ext_resource type="Material" uid="uid://cap4qjw4xgdea" path="res://Main/dev/base_color.tres" id="2_fn5ws"]
+[ext_resource type="PackedScene" uid="uid://741dnve7wgiq" path="res://Wall/Wall.tscn" id="3_on5nr"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_63o6j"]
+size = Vector3(2, 0.1, 2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_fn5ws"]
+size = Vector3(2, 0.1, 2)
+
+[node name="Room" type="Node3D"]
+script = ExtResource("1_63o6j")
+
+[node name="Floor" type="StaticBody3D" parent="."]
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("BoxShape3D_63o6j")
+
+[node name="Graphics" type="MeshInstance3D" parent="Floor"]
+material_override = ExtResource("2_fn5ws")
+mesh = SubResource("BoxMesh_fn5ws")
+skeleton = NodePath("../..")
+
+[node name="NorthWall" parent="." instance=ExtResource("3_on5nr")]
+
+[node name="EastWall" parent="." instance=ExtResource("3_on5nr")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+direction = 1
+
+[node name="SouthWall" parent="." instance=ExtResource("3_on5nr")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
+direction = 2
+
+[node name="WestWall" parent="." instance=ExtResource("3_on5nr")]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 0, 0, 0)
+direction = 3

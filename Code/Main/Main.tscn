@@ -1,0 +1,49 @@
+[gd_scene load_steps=9 format=3 uid="uid://0qbj0horj2er"]
+
+[ext_resource type="Script" uid="uid://6tci8eh6l5fe" path="res://Main/Main.gd" id="1_jw5p2"]
+[ext_resource type="PackedScene" uid="uid://ohqpknjli5po" path="res://Maze/Maze.tscn" id="3_amygn"]
+[ext_resource type="PackedScene" uid="uid://r2h000728m5f" path="res://Roller/Roller.tscn" id="3_ps1la"]
+[ext_resource type="PackedScene" uid="uid://dwgx1nqs372mh" path="res://Menu/Menu.tscn" id="4_ps1la"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_amygn"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_ps1la"]
+sky_material = SubResource("ProceduralSkyMaterial_amygn")
+
+[sub_resource type="Environment" id="Environment_6aewd"]
+background_mode = 2
+sky = SubResource("Sky_ps1la")
+tonemap_mode = 2
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_amygn"]
+radius = 0.08
+height = 13.035
+
+[node name="Main" type="Node"]
+script = ExtResource("1_jw5p2")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_6aewd")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 2.53954, 8.79722, -4.39861)
+shadow_enabled = true
+
+[node name="Rig" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.809171, 0.587573, 0, -0.587573, 0.809171, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Rig"]
+transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, 0, 0, 28.9617)
+fov = 49.0
+
+[node name="Roller" parent="." instance=ExtResource("3_ps1la")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0159316, 6.09563, 0.0153913)
+
+[node name="Maze" parent="." instance=ExtResource("3_amygn")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_amygn")
+
+[node name="Menu" parent="." instance=ExtResource("4_ps1la")]
