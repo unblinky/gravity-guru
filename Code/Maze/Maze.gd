@@ -7,21 +7,51 @@ class_name Maze
 
 const ROOM: PackedScene = preload("res://Room/Room.tscn")
 
-var maze_width: int = 4 # Grid units.
-var maze_height: int = 4 # Grid units.
-var maze_offset: Vector3
-
+# Input.
 var tilt_speed: float = 75.0 # Degrees / sec.
 var mouse_sensitivity: float = 0.06
 var dragging: bool = false
 
-# LERP
-var post_drag_maze_rotation: Vector3 # A
+# Maze generation.
+var maze_width: int = 10 # Grid units.
+var maze_height: int = 10 # Grid units.
+var maze_offset: Vector3 ## Use to center the maze under the camera based on width and height.
+var room_count: int = 0 ## Number of rooms built so far.
+var total_rooms: int = maze_width * maze_height ## Build this many rooms.
+
+var ranger: Vector2i = Vector2i(0, 0) ## The "play head" for the current location in Grid space.
+var ranger_speed: float = 1 ## Grid distance per move.
+
+var current_room: Room ## Holds the current room while we tinker with it.
+var breadcrumbs: Array[Room] = [] ## A list of rooms where the ranger has been.
+
+# Lerping.
+var post_drag_maze_rotation: Vector3
 var lerp_speed: float = 1.5 # radians / sec.
 
 # TODO: Quatrenion sollution?
 var weight_x: float = 1.0 ## Pitch.
 var weight_z: float = 1.0 ## Roll.
+
+
+func _ready() -> void:
+	print("Total Rooms: ", total_rooms)
+	
+	# Place the starting room.
+	current_room = ROOM.instantiate()
+	
+	# Use the `curren_room` to set the `maze_offset`.
+	maze_offset = Vector3(maze_width * current_room.size.x / 2.0 - 1, 0, maze_height * current_room.size.y / 2.0 - 1)
+	current_room.grid_location = ranger
+	current_room.position = Vector3(ranger.x * current_room.size.x, 0, ranger.y * current_room.size.y) - maze_offset
+	add_child(current_room)
+	breadcrumbs.append(current_room)
+	room_count += 1
+	
+	# Scout in the direction of a random wall.
+	#var location = current_room.DisableRandomWall()
+	ScoutAndBuild(current_room)
+
 
 func _process(delta: float) -> void:
 	if Input.is_action_pressed("tilt_left"):
@@ -60,123 +90,96 @@ func _input(event):
 			rotation_degrees.x += event.relative.y * mouse_sensitivity
 			rotation_degrees.z -= event.relative.x * mouse_sensitivity
 			print("Relative: ", event.relative)
+
+
+## Recursive function.
+func ScoutAndBuild(current_room: Room):
+	print(breadcrumbs)
+	
+	# End recursion, condition.
+	if room_count < 10:
+		# current_room.grid_location.x + 1 
+		var wall = current_room.DisableRandomWall()
+		if wall != null:
+			wall.queue_free()
 		
-
-
-
-func _ready() -> void:
-	var room_count = maze_width * maze_height
-	var ranger: Vector2i = Vector2i(0, 0) # Grid space.
-	var ranger_speed: float = 1 # Grid speed.
-	
-	var breadcrumbs: Array[Room] = [] ## A list of visited grid points.
-	
-	
-	# Pattern
-	# Place room
-	var first_room = ROOM.instantiate()
-	maze_offset = Vector3(maze_width * first_room.size.x / 2.0 - 1, 0, maze_height * first_room.size.y / 2.0 - 1)
-	first_room.position = Vector3(ranger.x * first_room.size.x, 0, ranger.y * first_room.size.y) - maze_offset
-	add_child(first_room)
-	
-	
-		# Where did we come from?
-	# Room > breadcrumbs
-	# Consume a wall from the list.
-		# Is it valid move??????
-			# Maze bounds.
-			# Is in the breadcrumbs list.
-		# Update ranger
-	
-	
-	
-	#
-	## Setup loop.
-	##if not breadcrumbs.is_empty():
-	#for i in room_count:
+		var scout: Vector2i = current_room.grid_location
+		scout.x += 1
+		SpawnRoom(scout, ranger) # Continue to the next room.
 		#
 		#
 		#
+		## No more walls to search with.
+		#if wall == null:
+			#if breadcrumbs.size() > 0:
+				## Pop the last element in the array to rewind the `current_room`.
+				#current_room = breadcrumbs.pop_back()
+				#SeekAndBuild(current_room)
 		#
-		#
-		#
-		#
-		## Check for breadcrumbs.
-		#for crumb in breadcrumbs:
-			## if we don't find it?
-			#if crumb.grid_location == ranger:
-				#print("Already been here.")
-				#
-			#
-			#
-			
-			#
-			#while room.grid_location != ranger:
-				#print("Been here before: ", ranger)
-				#print(room)
-				#var current_room: Room = room
-				#if room.grid_location == ranger:
-#
-					#var groom: Room = SpawnRoom(ranger)
-					#breadcrumbs.append(room)
-					#print(">>>>>>>>>>>", breadcrumbs.back())
-		
-			
-			
-			## TODO: Is this random?
-			#var rando_index: int = randi_range(0, room.walls.size() - 1)
-			#print("Random index: ", rando_index)
-			#
-			## Checking for maze boundries.
-			#
-			#
-			## Pick a direction based on remaining walls.
-			##var rando_direction = room.walls.pop_at(rando_index).wall.direction
-			#var rando_wall = room.walls.pop_at(rando_index)
-			#
-			#match rando_wall.direction:
+		## Scout the location in the wall's direciton.
+		#else:
+			#var location: Vector2i
+			#match wall.direction:
 				#Wall.Direction.NORTH:
-					## Check North.
-					#if ranger.y - ranger_speed > 0:
-						#rando_wall.queue_free()
-						#ranger.y -= ranger_speed
-				#
+					#location.y -= 1
 				#Wall.Direction.EAST:
-					## Check East.
-					#if ranger.x + ranger_speed < maze_width:
-						#rando_wall.queue_free()
-						#ranger.x += ranger_speed
-					#
+					#location.x += 1
 				#Wall.Direction.SOUTH:
-					#ranger.y += ranger_speed
-					## Check South.
-					#if ranger.y + ranger_speed < maze_height:
-						#rando_wall.queue_free()
-						#ranger.y += ranger_speed
-#
+					#location.y += 1
 				#Wall.Direction.WEST:
-					## Check West.
-					#if ranger.x - ranger_speed > 0:
-						#rando_wall.queue_free()
-						#ranger.x -= ranger_speed
-		#
-		#
-		#
+					#location.x -= 1
 			#
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
+			## Have we already built a room here?
+			#if SearchBreadcrumbs(location):
+				#wall.queue_free()
+				#SeekAndBuild(current_room)
+			#
+			## The `location` seems valid! Build the room.
+			#else:
+				#wall.queue_free()
+				#SpawnRoom(location, ranger) # Continue to the next room.
+#
+
+## Returns true if found.
+func SearchBreadcrumbs(location: Vector2i):
+	for room in breadcrumbs:
+		# Found the grid location in the breadcrumbs.
+		if room.grid_location == location:
+			return true
+	return false
+
+
+## Spawn a room at the `build_location` and knock down the wall between the ranger location.
+func SpawnRoom(build_location: Vector2i, ranger: Vector2i):
+	await get_tree().create_timer(0.2).timeout
+	print("New Room at: ", build_location)
+	
+	var room = ROOM.instantiate()
+	room.grid_location = build_location
+	room.position = Vector3(build_location.x * room.size.x, 0, build_location.y * room.size.y) - maze_offset
+	add_child(room) # Add the new room to the scene tree.
+	breadcrumbs.append(room) # Add to the end of the breadcrumbs list.
+	room_count += 1
+	
+	# Which wall do we want to knock down?
+	if build_location.y < ranger.y:
+		room.RemoveWall(Wall.Direction.NORTH)
+	elif build_location.x > ranger.x:
+		room.RemoveWall(Wall.Direction.EAST)
+	elif build_location.y > ranger.y:
+		room.RemoveWall(Wall.Direction.SOUTH)
+	elif build_location.x < ranger.x:
+		room.RemoveWall(Wall.Direction.WEST)
+	else:
+		print("Should never get here.")
+	
+	ranger = room.grid_location
+	current_room = room
+	ScoutAndBuild(current_room)
+
+
+
+			## Checking for maze boundries.
 			
 			#var wall = room.walls.pop_at(rando_index)
 			#if wall != null:
@@ -193,15 +196,3 @@ func _ready() -> void:
 				#wall.queue_free()
 		
 		#await get_tree().create_timer(0.2).timeout
-
-
-
-
-
-func SpawnRoom(grid_location: Vector2i, drop_wall: Wall.Direction):
-	var room = ROOM.instantiate()
-	room.grid_location = grid_location
-	room.position = Vector3(grid_location.x * room.size.x, 0, grid_location.y * room.size.y) - maze_offset
-	add_child(room) # Display the graphics.
-	room.RemoveWall(drop_wall)
-	return room
