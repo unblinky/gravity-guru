@@ -7,6 +7,8 @@ class_name Maze
 
 const ROOM: PackedScene = preload("res://Room/Room.tscn")
 const ROLLER: PackedScene = preload("res://Roller/Roller.tscn")
+const GOAL: PackedScene = preload("res://Goal/Goal.tscn")
+
 #const RANGER: PackedScene = preload("res://Ranger/Ranger.tscn")
 
 # Input.
@@ -15,7 +17,7 @@ var mouse_sensitivity: float = 0.06
 var dragging: bool = false
 
 # Maze generation.
-var await_time: float = 0.0
+var await_time: float = 0.1
 
 # Lerping.
 var post_drag_maze_rotation: Vector3
@@ -23,9 +25,7 @@ var lerp_speed: float = 1.5 ## radians / sec.
 var weight_x: float = 1.0 ## Pitch.
 var weight_z: float = 1.0 ## Roll.
 
-
-func _ready() -> void:
-	Generate(Vector2(5, 5))
+var main: Main
 
 
 ## Generate a random maze.
@@ -102,12 +102,21 @@ func Generate(dimensions: Vector2i):
 	
 	# Before exiting the maze generation.
 	var roller = ROLLER.instantiate()
-	roller.position.y = 6 # Meteres.
 	
-	var coord = visited_coords.pick_random()
-	roller.position.x = coord.x * current_room.dimensions.x - maze_center.x
-	roller.position.z = coord.y * current_room.dimensions.y - maze_center.y
-	add_child(roller)
+	var rando = randi_range(0, visited_coords.size() - 1)
+	var coord = visited_coords.pop_at(rando)
+	
+	roller.drop_point.x = coord.x * current_room.dimensions.x - maze_center.x
+	roller.drop_point.z = coord.y * current_room.dimensions.y - maze_center.y	
+	main.add_child(roller) # Spawn to main.
+	
+	coord = visited_coords.pick_random()
+	
+	var goal = GOAL.instantiate()
+	goal.main = main
+	goal.position.x = coord.x * current_room.dimensions.x - maze_center.x
+	goal.position.z = coord.y * current_room.dimensions.y - maze_center.y
+	add_child(goal)
 	
 	#ranger.position = current_room.position
 
@@ -148,4 +157,4 @@ func _input(event):
 		if dragging:
 			rotation_degrees.x += event.relative.y * mouse_sensitivity
 			rotation_degrees.z -= event.relative.x * mouse_sensitivity
-			print("Relative: ", event.relative)
+			#print("Relative: ", event.relative)
