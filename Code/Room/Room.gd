@@ -1,29 +1,35 @@
 extends Node3D
 class_name Room
 
-## List of possible directions. Revome from the list to negate that direction.
-@onready var walls: Array[Wall] = [$NorthWall, $EastWall, $SouthWall, $WestWall]
+# List of possible directions. Revome from the list to negate that direction.
+@onready var north_wall: Wall = $NorthWall
+@onready var east_wall: Wall = $EastWall
+@onready var south_wall: Wall = $SouthWall
+@onready var west_wall: Wall = $WestWall
 
-var grid_location: Vector2i ## Position in maze grid cords.
-var size: Vector2 = Vector2(2.0, 2.0) ## Meters squared (area).
+var coords: Vector2i ## Location in maze grid coords.
+var dimensions: Vector2 = Vector2(2.0, 2.0) ## Meters.
 
+func Reposition(maze_center: Vector2):
+	position = Vector3(coords.x * dimensions.x - maze_center.x, 0, coords.y * dimensions.y - maze_center.y)
 
-func RemoveWall(direction: Wall.Direction):
-	for wall in walls:
-		if wall.direction == direction:
-			wall.queue_free()
-
-
-#func DisableWall(direction: Wall.Direction):
-	#var index = walls.find(direction)
-	#if index <= -1:
-		#walls.remove_at(index)
-
-
-## Return the grid position to scout next. Returns (-111,-111) if no more rooms.
-## Return the wall for processing. Return null in no more rooms.
-func DisableRandomWall() -> Wall:
-	if !walls.is_empty():
-		var rando_index: int = randi_range(0, walls.size() - 1)
-		return walls.pop_at(rando_index)
-	return null
+func OpenPassage(next_room: Room):
+	# Knock down NORTH wall?
+	if next_room.coords.y < coords.y:
+		north_wall.queue_free()
+		next_room.south_wall.queue_free()
+	
+	# Knock down EAST wall?
+	if next_room.coords.x > coords.x:
+		east_wall.queue_free()
+		next_room.west_wall.queue_free()
+	
+	# Knock down SOUTH wall?
+	if next_room.coords.y > coords.y:
+		south_wall.queue_free()
+		next_room.north_wall.queue_free()
+	
+	# Knock down WEST wall?
+	if next_room.coords.x < coords.x:
+		west_wall.queue_free()
+		next_room.east_wall.queue_free()
