@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://cqnbcyl8r5hw7"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_a8apf"]
+top_radius = 0.295
+bottom_radius = 0.155
+height = 1.115
+
+[sub_resource type="SphereMesh" id="SphereMesh_lfr8v"]
+radius = 0.25
+height = 0.5
+
+[node name="Ranger" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.671405, 0)
+mesh = SubResource("CylinderMesh_a8apf")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.59416, 0)
+mesh = SubResource("SphereMesh_lfr8v")

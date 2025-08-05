@@ -6,6 +6,7 @@ extends Node3D
 class_name Maze
 
 const ROOM: PackedScene = preload("res://Room/Room.tscn")
+const RANGER: PackedScene = preload("res://Ranger/Ranger.tscn")
 
 # Input.
 var tilt_speed: float = 75.0 # Degrees / sec.
@@ -13,7 +14,7 @@ var mouse_sensitivity: float = 0.06
 var dragging: bool = false
 
 # Maze generation.
-var await_time: float = 0.0
+var await_time: float = 0.4
 var maze_width: int = 10 # Grid units.
 var maze_height: int = 10 # Grid units.
 var maze_offset: Vector3 ## Use to center the maze under the camera based on width and height.
@@ -38,6 +39,7 @@ var weight_z: float = 1.0 ## Roll.
 func _ready() -> void:
 	Generate(Vector2(5, 5))
 
+
 ## Generate a random maze.
 func Generate(dimensions: Vector2i):
 	var total_rooms: int = dimensions.x * dimensions.y
@@ -55,9 +57,9 @@ func Generate(dimensions: Vector2i):
 	maze_center.y = dimensions.y * current_room.dimensions.y / 2.0 - 1
 	current_room.Reposition(maze_center)
 	
-	#var ranger: Ranger = RANGER.instantiate()
-	#ranger.position = current_room.position
-	#add_child(ranger)
+	var ranger = RANGER.instantiate()
+	ranger.position = current_room.position
+	add_child(ranger)
 	
 	# Store location in order to find the next room.
 	breadcrumbs.append(current_room) # Grow and shrink.
@@ -109,10 +111,7 @@ func Generate(dimensions: Vector2i):
 			breadcrumbs.append(current_room)
 			visited_coords.append(current_room.coords)
 		
-		#ranger.position = current_room.position
-	
-
-
+		ranger.position = current_room.position
 
 
 func _process(delta: float) -> void:
