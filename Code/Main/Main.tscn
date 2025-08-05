@@ -1,8 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://0qbj0horj2er"]
+[gd_scene load_steps=7 format=3 uid="uid://0qbj0horj2er"]
 
 [ext_resource type="Script" uid="uid://6tci8eh6l5fe" path="res://Main/Main.gd" id="1_jw5p2"]
-[ext_resource type="PackedScene" uid="uid://ohqpknjli5po" path="res://Maze/Maze.tscn" id="3_amygn"]
-[ext_resource type="PackedScene" uid="uid://r2h000728m5f" path="res://Roller/Roller.tscn" id="3_ps1la"]
 [ext_resource type="PackedScene" uid="uid://dwgx1nqs372mh" path="res://Menu/Menu.tscn" id="4_ps1la"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_amygn"]
@@ -37,11 +35,6 @@ transform = Transform3D(1, 0, 0, 0, 0.809171, 0.587573, 0, -0.587573, 0.809171, 
 [node name="Camera3D" type="Camera3D" parent="Rig"]
 transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, 0, 0, 28.9617)
 fov = 49.0
-
-[node name="Roller" parent="." instance=ExtResource("3_ps1la")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0159316, 6.09563, 0.0153913)
-
-[node name="Maze" parent="." instance=ExtResource("3_amygn")]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_amygn")
