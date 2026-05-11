@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://bp1e1efmmo45n"]
+
+[ext_resource type="PackedScene" uid="uid://dq67l2jol32j2" path="res://Room/assets/wall.tscn" id="1_63o6j"]
+[ext_resource type="Script" uid="uid://cihklknh5hbs4" path="res://Room/Room.gd" id="1_fn5ws"]
+
+[node name="Room" type="Node3D" unique_id=12264061]
+script = ExtResource("1_fn5ws")
+
+[node name="ForwardWall" parent="." unique_id=204456902 instance=ExtResource("1_63o6j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+
+[node name="BackWall" parent="." unique_id=72733083 instance=ExtResource("1_63o6j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
+
+[node name="RightWall" parent="." unique_id=1385341587 instance=ExtResource("1_63o6j")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0.5, 0, 2.1855694e-08)
+
+[node name="LeftWall" parent="." unique_id=1785803726 instance=ExtResource("1_63o6j")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.5, 0, -2.1855694e-08)

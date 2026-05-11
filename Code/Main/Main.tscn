@@ -38,4 +38,3 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 7.101696)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5248413, 0)
 
 [node name="Maze" parent="." unique_id=1318115514 instance=ExtResource("3_amygn")]
-transform = Transform3D(0.99967223, 0.021992227, -0.013117302, -0.023063257, 0.99585086, -0.08802909, 0.01112692, 0.08830275, 0.9960315, 0, 0, 0)
