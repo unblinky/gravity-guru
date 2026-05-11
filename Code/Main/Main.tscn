@@ -1,6 +1,41 @@
 [gd_scene format=3 uid="uid://b1wdu85kwpks7"]
 
 [ext_resource type="Script" uid="uid://b4r8xk7j4j4fv" path="res://Main/Main.gd" id="1_lxy7q"]
+[ext_resource type="PackedScene" uid="uid://cymahi8ut8h1e" path="res://Ball/Ball.tscn" id="2_83ytx"]
+[ext_resource type="PackedScene" uid="uid://cvkd56cc3u2qh" path="res://Maze/Maze.tscn" id="3_amygn"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_amygn"]
+sky_top_color = Color(0.38468674, 0.48833257, 0.27226, 1)
+sky_horizon_color = Color(0.61685777, 0.68535805, 0.634472, 1)
+ground_bottom_color = Color(0.030111892, 0.20046729, 0.21299562, 1)
+ground_horizon_color = Color(0.61685777, 0.68535805, 0.634472, 1)
+
+[sub_resource type="Sky" id="Sky_ps1la"]
+sky_material = SubResource("ProceduralSkyMaterial_amygn")
+
+[sub_resource type="Environment" id="Environment_6aewd"]
+background_mode = 2
+sky = SubResource("Sky_ps1la")
+tonemap_mode = 2
 
 [node name="Main" type="Node" unique_id=1947799888]
 script = ExtResource("1_lxy7q")
+
+[node name="Sun" type="DirectionalLight3D" parent="." unique_id=1303834460]
+transform = Transform3D(0.81004167, -0.5078134, 0.29318616, 0, 0.49999997, 0.86602545, -0.5863724, -0.7015167, 0.4050208, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1546370111]
+environment = SubResource("Environment_6aewd")
+
+[node name="Rig" type="Node3D" parent="." unique_id=874996498]
+transform = Transform3D(1, 0, 0, 0, 0.5204286, 0.8539053, 0, -0.8539053, 0.5204286, 0, 0, 1.5122008)
+
+[node name="Camera3D" type="Camera3D" parent="Rig" unique_id=2041526354]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 7.101696)
+
+[node name="Ball" parent="." unique_id=293667383 instance=ExtResource("2_83ytx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5248413, 0)
+
+[node name="Maze" parent="." unique_id=1318115514 instance=ExtResource("3_amygn")]
+transform = Transform3D(0.99967223, 0.021992227, -0.013117302, -0.023063257, 0.99585086, -0.08802909, 0.01112692, 0.08830275, 0.9960315, 0, 0, 0)

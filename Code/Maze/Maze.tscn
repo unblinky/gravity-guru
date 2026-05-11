@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://cvkd56cc3u2qh"]
+
+[ext_resource type="Script" uid="uid://bwh03kuxx8itt" path="res://Maze/Maze.gd" id="1_d5g1r"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_r14sl"]
+size = Vector3(10, 0.1, 10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r14sl"]
+albedo_color = Color(0.26311713, 0.19222006, 0.13279814, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_d5g1r"]
+size = Vector3(10, 0.1, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_d5g1r"]
+size = Vector3(1, 1, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_15p2h"]
+size = Vector3(1, 1, 0.1)
+
+[node name="Maze" type="Node3D" unique_id=1318115514]
+script = ExtResource("1_d5g1r")
+
+[node name="Floor" type="StaticBody3D" parent="." unique_id=503678041]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=242474430]
+shape = SubResource("BoxShape3D_r14sl")
+
+[node name="Graphics" type="MeshInstance3D" parent="Floor" unique_id=603071914]
+material_override = SubResource("StandardMaterial3D_r14sl")
+mesh = SubResource("BoxMesh_d5g1r")
+
+[node name="Wall" type="StaticBody3D" parent="." unique_id=1158923987]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall" unique_id=487113436]
+shape = SubResource("BoxShape3D_d5g1r")
+
+[node name="Graphics" type="MeshInstance3D" parent="Wall" unique_id=980636383]
+mesh = SubResource("BoxMesh_15p2h")
+
+[node name="Wall2" type="StaticBody3D" parent="." unique_id=366180562]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 1.1917266)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall2" unique_id=1053381574]
+shape = SubResource("BoxShape3D_d5g1r")
+
+[node name="Graphics" type="MeshInstance3D" parent="Wall2" unique_id=2034600862]
+mesh = SubResource("BoxMesh_15p2h")
+
+[node name="Wall3" type="StaticBody3D" parent="." unique_id=484342814]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 1.3206441, 0.5, 1.9664228)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall3" unique_id=1177633702]
+shape = SubResource("BoxShape3D_d5g1r")
+
+[node name="Graphics" type="MeshInstance3D" parent="Wall3" unique_id=784203035]
+mesh = SubResource("BoxMesh_15p2h")
