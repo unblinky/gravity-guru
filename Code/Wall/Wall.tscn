@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://dq67l2jol32j2"]
 
+[ext_resource type="Script" uid="uid://ch3vlmjv5hero" path="res://Wall/Wall.gd" id="1_11sgl"]
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_d5g1r"]
 size = Vector3(1, 1, 0.1)
 
@@ -7,8 +9,9 @@ size = Vector3(1, 1, 0.1)
 size = Vector3(1, 1, 0.1)
 
 [node name="Wall" type="StaticBody3D" unique_id=204456902]
+script = ExtResource("1_11sgl")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=672469134]
+[node name="Collider" type="CollisionShape3D" parent="." unique_id=672469134]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("BoxShape3D_d5g1r")
 
