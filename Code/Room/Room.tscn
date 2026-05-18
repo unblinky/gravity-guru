@@ -2,18 +2,26 @@
 
 [ext_resource type="PackedScene" uid="uid://dq67l2jol32j2" path="res://Wall/Wall.tscn" id="1_63o6j"]
 [ext_resource type="Script" uid="uid://cihklknh5hbs4" path="res://Room/Room.gd" id="1_fn5ws"]
+[ext_resource type="Material" uid="uid://voo7g5rrrafl" path="res://Wall/assets/north.tres" id="3_soc6w"]
+[ext_resource type="Material" uid="uid://bcdlko2i0m78g" path="res://Wall/assets/east.tres" id="4_2qh2i"]
+[ext_resource type="Material" uid="uid://bdxtpkhc2ngt0" path="res://Wall/assets/south.tres" id="5_6mart"]
+[ext_resource type="Material" uid="uid://dgg5dms2ws52y" path="res://Wall/assets/west.tres" id="6_xiqp0"]
 
 [node name="Room" type="Node3D" unique_id=12264061]
 script = ExtResource("1_fn5ws")
 
-[node name="LeftWall" parent="." unique_id=1785803726 instance=ExtResource("1_63o6j")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.5, 0, -2.9802322e-08)
+[node name="NorthWall" parent="." unique_id=204456902 instance=ExtResource("1_63o6j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.010173738, -0.45)
+material = ExtResource("3_soc6w")
 
-[node name="RightWall" parent="." unique_id=1385341587 instance=ExtResource("1_63o6j")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0.5, 0, 2.1855694e-08)
+[node name="EastWall" parent="." unique_id=1086331929 instance=ExtResource("1_63o6j")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0.43321294, 0, 0)
+material = ExtResource("4_2qh2i")
 
-[node name="ForwardWall" parent="." unique_id=204456902 instance=ExtResource("1_63o6j")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+[node name="SouthWall" parent="." unique_id=72733083 instance=ExtResource("1_63o6j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.45)
+material = ExtResource("5_6mart")
 
-[node name="BackWall" parent="." unique_id=72733083 instance=ExtResource("1_63o6j")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
+[node name="WestWall" parent="." unique_id=1785803726 instance=ExtResource("1_63o6j")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.45, 0, 0)
+material = ExtResource("6_xiqp0")
