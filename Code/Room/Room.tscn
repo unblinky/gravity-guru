@@ -7,6 +7,15 @@
 [ext_resource type="Material" uid="uid://bdxtpkhc2ngt0" path="res://Wall/assets/south.tres" id="5_6mart"]
 [ext_resource type="Material" uid="uid://dgg5dms2ws52y" path="res://Wall/assets/west.tres" id="6_xiqp0"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_soc6w"]
+size = Vector3(1, 0.1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2qh2i"]
+albedo_color = Color(0.26311713, 0.19222006, 0.13279814, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_6mart"]
+size = Vector3(1, 0.1, 1)
+
 [node name="Room" type="Node3D" unique_id=12264061]
 script = ExtResource("1_fn5ws")
 
@@ -25,3 +34,12 @@ material = ExtResource("5_6mart")
 [node name="WestWall" parent="." unique_id=1785803726 instance=ExtResource("1_63o6j")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.45, 0, 0)
 material = ExtResource("6_xiqp0")
+
+[node name="Floor" type="StaticBody3D" parent="." unique_id=1707966450]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=1837571207]
+shape = SubResource("BoxShape3D_soc6w")
+
+[node name="Graphics" type="MeshInstance3D" parent="Floor" unique_id=109108395]
+material_override = SubResource("StandardMaterial3D_2qh2i")
+mesh = SubResource("BoxMesh_6mart")

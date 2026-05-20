@@ -2,15 +2,6 @@
 
 [ext_resource type="Script" uid="uid://bwh03kuxx8itt" path="res://Maze/Maze.gd" id="1_d5g1r"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_r14sl"]
-size = Vector3(10, 0.1, 10)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r14sl"]
-albedo_color = Color(0.26311713, 0.19222006, 0.13279814, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_d5g1r"]
-size = Vector3(10, 0.1, 10)
-
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_d5g1r"]
 radius = 0.071
 
@@ -20,17 +11,17 @@ albedo_color = Color(0.66896814, 0.26285085, 0.101213776, 1)
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_15p2h"]
 radius = 0.267
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_r14sl"]
+size = Vector3(10, 0.1, 10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r14sl"]
+albedo_color = Color(0.26311713, 0.19222006, 0.13279814, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_d5g1r"]
+size = Vector3(10, 0.1, 10)
+
 [node name="Maze" type="Node3D" unique_id=1318115514]
 script = ExtResource("1_d5g1r")
-
-[node name="Floor" type="StaticBody3D" parent="." unique_id=503678041]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=242474430]
-shape = SubResource("BoxShape3D_r14sl")
-
-[node name="Graphics" type="MeshInstance3D" parent="Floor" unique_id=603071914]
-material_override = SubResource("StandardMaterial3D_r14sl")
-mesh = SubResource("BoxMesh_d5g1r")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=483340067]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, -2.5)
@@ -52,3 +43,12 @@ mesh = SubResource("CapsuleMesh_d5g1r")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.65541935, 0)
 material_override = SubResource("StandardMaterial3D_d5g1r")
 mesh = SubResource("CapsuleMesh_15p2h")
+
+[node name="Floor" type="StaticBody3D" parent="." unique_id=577226989]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=1979417370]
+shape = SubResource("BoxShape3D_r14sl")
+
+[node name="Graphics" type="MeshInstance3D" parent="Floor" unique_id=53087884]
+material_override = SubResource("StandardMaterial3D_r14sl")
+mesh = SubResource("BoxMesh_d5g1r")

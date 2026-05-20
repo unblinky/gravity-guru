@@ -1,13 +1,6 @@
 extends Node3D
 class_name Room
 
-enum Direction {
-	NORTH,
-	EAST,
-	SOUTH,
-	WEST
-}
-
 @onready var north_wall: Wall = $NorthWall
 @onready var east_wall: Wall = $EastWall
 @onready var south_wall: Wall = $SouthWall
@@ -15,6 +8,7 @@ enum Direction {
 
 # List of our orginal walls.
 var walls: Array[Wall]
+var plot: Vector2i
 
 # TODO: Wall logic & bounds.
 
@@ -49,17 +43,17 @@ func _ready() -> void:
 #
 #
 ## Hide, dissable a wall.
-func remove_wall(direction: Direction):
+func remove_wall(direction: Wall.Direction):
 	match direction:
-		Direction.NORTH:
+		Wall.Direction.NORTH:
 			north_wall.disable()
 			walls.erase(north_wall)
-		Direction.EAST:
+		Wall.Direction.EAST:
 			east_wall.disable()
 			walls.erase(east_wall)
-		Direction.SOUTH:
+		Wall.Direction.SOUTH:
 			south_wall.disable()
 			walls.erase(south_wall)
-		Direction.WEST:
+		Wall.Direction.WEST:
 			west_wall.disable()
 			walls.erase(west_wall)
