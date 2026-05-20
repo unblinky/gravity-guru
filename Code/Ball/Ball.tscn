@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://cymahi8ut8h1e"]
 
+[ext_resource type="PackedScene" uid="uid://d2iqffodxxtdw" path="res://Ball/assets/monkey_ball.glb" id="1_cfgdn"]
+
 [sub_resource type="SphereShape3D" id="SphereShape3D_uk1te"]
 radius = 0.4
 
@@ -14,4 +16,8 @@ can_sleep = false
 shape = SubResource("SphereShape3D_uk1te")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1081615883]
+visible = false
 mesh = SubResource("SphereMesh_uk1te")
+
+[node name="monkey_ball" parent="." unique_id=44303512 instance=ExtResource("1_cfgdn")]
+transform = Transform3D(0.28, 0, 0, 0, 0.28, 0, 0, 0, 0.28, 0, -0.30483365, 0)
