@@ -23,19 +23,6 @@ func _process(delta: float) -> void:
 		rotation_degrees.x += 2.0
 
 
-# TODO: Refactor to Room?
-func oposite_direction(headed: Wall.Direction) -> Wall.Direction:
-	match headed:
-		Wall.Direction.NORTH:
-			return Wall.Direction.SOUTH
-		Wall.Direction.EAST:
-			return Wall.Direction.WEST
-		Wall.Direction.SOUTH:
-			return Wall.Direction.NORTH
-		Wall.Direction.WEST:
-			return Wall.Direction.EAST
-	return Wall.Direction.NONE
-
 
 func generate(columns: int, rows: int):
 	offset.x = (columns - 1) / 2.0
@@ -43,42 +30,52 @@ func generate(columns: int, rows: int):
 	# FIXME: Double-check
 	position -= offset
 	
-	#var rando_x = 2 # randi_range(0, columns - 1)
-	#var rando_z = 1 # randi_range(0, rows - 1)
 	## Stores the 2D grid position.
-	var current_plot: Vector2i = Vector2i(2, 1)
+	var current_plot: Vector2i = Vector2i(2, 1) # FIXME: Rando here.
 	var current_room: Room
+	var total_rooms: int = 6
+	#var total_rooms: int = columns * rows
 	
 	# First Random Room
 	current_room = spawn_room(current_plot)
-
-	var total_rooms: int = 6
-	#var total_rooms: int = columns * rows
 	
 	for r in total_rooms:
 		await get_tree().create_timer(0.4).timeout
 		print(plots_visited)
 		
-		# TODO: Pick a direction.
-		# Testing East
-		var headed: Wall.Direction = Wall.Direction.EAST
+		# FIXME: Pick a direction.
+		var headed: Vector2i = current_room.next_direction()
+		if headed == Vector2i.ZERO:
+			print("Error! Wall.Direction.NONE")
+			return
+		
+		# FIXME: Validating plot...
+		#if current_plot += headed:
+			
+		
 		current_room.remove_wall(headed)
 		
 		# Next Room
-		current_plot += find_valid_plot()
+		# FIXME: RESUME HERE.....
+		current_plot += find_valid_plot(headed)
+		
+		
 		current_room = spawn_room(current_plot)
 		
-		# Error checked example.
+		
+		
+		
+		# Error checked example of remove wall.
 		var oposite_direction = oposite_direction(headed)
 		if oposite_direction == Wall.Direction.NONE:
 			print("Error! Wall.Direction.NONE")
 			return
-		
 		current_room.remove_wall(oposite_direction)
 
 
 func spawn_room(plot: Vector2i) -> Room:
 	var room: Room = ROOM.instantiate()
+	room.maze = self
 	room.position.x = plot.x
 	room.position.z = plot.y
 	add_child(room)
@@ -89,9 +86,12 @@ func spawn_room(plot: Vector2i) -> Room:
 	return room
 
 
-# Validate a new plot.
-# TODO:
+# Validate a new plot (x,y).
+# HACK: testing walls...
 func find_valid_plot() -> Vector2i:
-	# Return a plot based on 
+	# Return a plot based on remaining walls.
+	#return Vector2i.RIGHT
+	return Vector2i.LEFT
+	#return Vector2i.UP
+	#return Vector2i.DOWN
 	
-	return Vector2i.RIGHT

@@ -9,6 +9,7 @@ class_name Room
 # List of our orginal walls.
 var walls: Array[Wall]
 var plot: Vector2i
+var maze: Maze
 
 # TODO: Wall logic & bounds.
 
@@ -24,36 +25,52 @@ func _ready() -> void:
 	walls.append(west_wall)
 
 
-func next_direction() -> Wall.Direction:
-	 #FIXME: Uncomment...
+# FIXME: 
+func next_direction() -> Vector2i:
+	var direction: Vector2i
 	var wall: Wall = walls.pick_random()
 	walls.erase(wall)
 	
-	if wall.position.x < 0:
-		return Wall.Direction.WEST
-	if wall.position.x > 0:
-		return Wall.Direction.EAST
-	if wall.position.z < 0:
-		return Wall.Direction.NORTH
-	if wall.position.z > 0:
-		return Wall.Direction.SOUTH
+	# Handle invalid X directions.
+	if plot.x + wall.direction.x < 0:
+		direction = next_direction()
+	if plot.x + wall.direction.x > maze.columns:
+		direction = next_direction()
 	
-	return Wall.Direction.NONE
-
+	# Handle invalid Y directions.
+	if plot.y + wall.direction.y < 0:
+		direction = next_direction()
+	if plot.y + wall.direction.y > maze.rows:
+		direction = next_direction()
+	return direction
 #
 #
+## TODO: Refactor to Room?
+#func oposite_direction(headed: Wall.Direction) -> Wall.Direction:
+	#match headed:
+		#Wall.Direction.NORTH:
+			#return Wall.Direction.SOUTH
+		#Wall.Direction.EAST:
+			#return Wall.Direction.WEST
+		#Wall.Direction.SOUTH:
+			#return Wall.Direction.NORTH
+		#Wall.Direction.WEST:
+			#return Wall.Direction.EAST
+	#return Wall.Direction.NONE
+	#
+	
 ## Hide, dissable a wall.
-func remove_wall(direction: Wall.Direction):
+func remove_wall(direction: Vector2i):
 	match direction:
-		Wall.Direction.NORTH:
+		Vector2i.UP:
 			north_wall.disable()
 			walls.erase(north_wall)
-		Wall.Direction.EAST:
+		Vector2i.RIGHT:
 			east_wall.disable()
 			walls.erase(east_wall)
-		Wall.Direction.SOUTH:
+		Vector2i.DOWN:
 			south_wall.disable()
 			walls.erase(south_wall)
-		Wall.Direction.WEST:
+		Vector2i.LEFT:
 			west_wall.disable()
 			walls.erase(west_wall)
