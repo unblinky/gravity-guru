@@ -5,7 +5,8 @@ enum Direction {
 	NORTH,
 	EAST,
 	SOUTH,
-	WEST
+	WEST,
+	NONE
 }
 
 @onready var collider: CollisionShape3D = $Collider

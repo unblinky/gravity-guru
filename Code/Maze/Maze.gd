@@ -25,7 +25,16 @@ func _process(delta: float) -> void:
 
 # TODO: Refactor to Room?
 func oposite_direction(headed: Wall.Direction) -> Wall.Direction:
-	return Wall.Direction.WEST
+	match headed:
+		Wall.Direction.NORTH:
+			return Wall.Direction.SOUTH
+		Wall.Direction.EAST:
+			return Wall.Direction.WEST
+		Wall.Direction.SOUTH:
+			return Wall.Direction.NORTH
+		Wall.Direction.WEST:
+			return Wall.Direction.EAST
+	return Wall.Direction.NONE
 
 
 func generate(columns: int, rows: int):
@@ -38,10 +47,10 @@ func generate(columns: int, rows: int):
 	#var rando_z = 1 # randi_range(0, rows - 1)
 	## Stores the 2D grid position.
 	var current_plot: Vector2i = Vector2i(2, 1)
-	var room: Room
+	var current_room: Room
 	
 	# First Random Room
-	room = spawn_room(current_plot)
+	current_room = spawn_room(current_plot)
 
 	var total_rooms: int = 6
 	#var total_rooms: int = columns * rows
@@ -53,24 +62,19 @@ func generate(columns: int, rows: int):
 		# TODO: Pick a direction.
 		# Testing East
 		var headed: Wall.Direction = Wall.Direction.EAST
-		room.remove_wall(headed)
+		current_room.remove_wall(headed)
 		
 		# Next Room
 		current_plot += find_valid_plot()
-		spawn_room(current_plot)
-		room.remove_wall(oposite_direction(headed))
+		current_room = spawn_room(current_plot)
 		
-		#match next_direction:
-			#Vector2i.LEFT:
-				#room.remove_wall(Room.Direction.RIGHT)
-			#Vector2i.RIGHT:
-				#room.remove_wall(Room.Direction.LEFT)
-			#Vector2i.UP:
-				#room.remove_wall(Room.Direction.FORWARD)
-			#Vector2i.DOWN:
-				#room.remove_wall(Room.Direction.BACK)
-	
-
+		# Error checked example.
+		var oposite_direction = oposite_direction(headed)
+		if oposite_direction == Wall.Direction.NONE:
+			print("Error! Wall.Direction.NONE")
+			return
+		
+		current_room.remove_wall(oposite_direction)
 
 
 func spawn_room(plot: Vector2i) -> Room:
@@ -86,6 +90,8 @@ func spawn_room(plot: Vector2i) -> Room:
 
 
 # Validate a new plot.
-# TODO: 
+# TODO:
 func find_valid_plot() -> Vector2i:
+	# Return a plot based on 
+	
 	return Vector2i.RIGHT

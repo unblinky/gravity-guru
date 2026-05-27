@@ -24,21 +24,21 @@ func _ready() -> void:
 	walls.append(west_wall)
 
 
-#func next_direction() -> Direction:
-	# FIXME: Uncomment...
-	#var wall: Wall = walls.pick_random()
-	#walls.erase(wall)
+func next_direction() -> Wall.Direction:
+	 #FIXME: Uncomment...
+	var wall: Wall = walls.pick_random()
+	walls.erase(wall)
 	
-	#if wall.position.x < 0:
-		#return Vector2i.LEFT
-	#if wall.position.x > 0:
-		#return Vector2i.RIGHT
-	#if wall.position.z < 0:
-		#return Vector2i.UP
-	#if wall.position.z > 0:
-		#return Vector2i.DOWN
+	if wall.position.x < 0:
+		return Wall.Direction.WEST
+	if wall.position.x > 0:
+		return Wall.Direction.EAST
+	if wall.position.z < 0:
+		return Wall.Direction.NORTH
+	if wall.position.z > 0:
+		return Wall.Direction.SOUTH
 	
-	#return Direction.EAST
+	return Wall.Direction.NONE
 
 #
 #
