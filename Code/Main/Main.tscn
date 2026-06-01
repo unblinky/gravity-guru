@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://b1wdu85kwpks7"]
 
 [ext_resource type="Script" uid="uid://b4r8xk7j4j4fv" path="res://Main/Main.gd" id="1_lxy7q"]
-[ext_resource type="PackedScene" uid="uid://cymahi8ut8h1e" path="res://Ball/Ball.tscn" id="2_83ytx"]
 [ext_resource type="PackedScene" uid="uid://cvkd56cc3u2qh" path="res://Maze/Maze.tscn" id="3_amygn"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_amygn"]
@@ -34,7 +33,5 @@ transform = Transform3D(1, 0, 0, 0, 0.5204286, 0.8539053, 0, -0.8539053, 0.52042
 [node name="Camera3D" type="Camera3D" parent="Rig" unique_id=2041526354]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 7.101696)
 
-[node name="Ball" parent="." unique_id=293667383 instance=ExtResource("2_83ytx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5248413, 0)
-
 [node name="Maze" parent="." unique_id=1318115514 instance=ExtResource("3_amygn")]
+dimensions = Vector2i(91, 4)
