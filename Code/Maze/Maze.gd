@@ -105,11 +105,13 @@ func generate(columns: int, rows: int):
 			plots_visited.append(next_room.plot)
 			scout.position = next_room.position
 			print(plots_visited)
+			# end dup?
+			
+			current_room.open_passage(next_room)
 			
 			# Increment current room.
 			current_room = next_room
 			
-			#current_room.OpenPassage(next_room)
 			
 		
 		#current_room.remove_wall(headed)

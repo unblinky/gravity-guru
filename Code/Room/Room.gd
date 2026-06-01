@@ -25,7 +25,8 @@ func _ready() -> void:
 	walls.append(west_wall)
 
 
-# FIXME: 
+
+# FIXME:
 func next_direction() -> Vector2i:
 	var direction: Vector2i
 	var wall: Wall = walls.pick_random()
@@ -43,6 +44,8 @@ func next_direction() -> Vector2i:
 	if plot.y + wall.direction.y > maze.rows:
 		direction = next_direction()
 	return direction
+
+
 #
 #
 ## TODO: Refactor to Room?
@@ -58,7 +61,29 @@ func next_direction() -> Vector2i:
 			#return Wall.Direction.EAST
 	#return Wall.Direction.NONE
 	#
+
+func open_passage(next_room: Room):
+	# Heading North
+	if next_room.plot.y < self.plot.y:
+		self.remove_wall(Vector2i.UP)
+		next_room.remove_wall(Vector2i.DOWN)
 	
+	# Heading East
+	if next_room.plot.x > self.plot.x:
+		self.remove_wall(Vector2i.RIGHT)
+		next_room.remove_wall(Vector2i.LEFT)
+	
+	# Heading South
+	if next_room.plot.y > self.plot.y:
+		self.remove_wall(Vector2i.DOWN)
+		next_room.remove_wall(Vector2i.UP)
+	
+	# Heading West
+	if next_room.plot.x < self.plot.x:
+		self.remove_wall(Vector2i.LEFT)
+		next_room.remove_wall(Vector2i.RIGHT)
+
+
 ## Hide, dissable a wall.
 func remove_wall(direction: Vector2i):
 	match direction:
