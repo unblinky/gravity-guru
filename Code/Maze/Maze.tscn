@@ -2,14 +2,14 @@
 
 [ext_resource type="Script" uid="uid://bwh03kuxx8itt" path="res://Maze/Maze.gd" id="1_d5g1r"]
 
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_d5g1r"]
+radius = 0.071
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d5g1r"]
 albedo_color = Color(0.66896814, 0.26285085, 0.101213776, 1)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_15p2h"]
 radius = 0.267
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_d5g1r"]
-radius = 0.071
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_r14sl"]
 size = Vector3(10, 0.1, 10)
@@ -22,13 +22,6 @@ size = Vector3(10, 0.1, 10)
 
 [node name="Maze" type="Node3D" unique_id=1318115514]
 script = ExtResource("1_d5g1r")
-
-[node name="Offset" type="Node3D" parent="." unique_id=1722430365]
-
-[node name="Scout" type="MeshInstance3D" parent="Offset" unique_id=150858860]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.65541935, 0)
-material_override = SubResource("StandardMaterial3D_d5g1r")
-mesh = SubResource("CapsuleMesh_15p2h")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=483340067]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, -2.5)
@@ -45,6 +38,11 @@ mesh = SubResource("CapsuleMesh_d5g1r")
 [node name="MeshInstance3D4" type="MeshInstance3D" parent="." unique_id=294384054]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, 2.5)
 mesh = SubResource("CapsuleMesh_d5g1r")
+
+[node name="Scout" type="MeshInstance3D" parent="." unique_id=150858860]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.65541935, 0)
+material_override = SubResource("StandardMaterial3D_d5g1r")
+mesh = SubResource("CapsuleMesh_15p2h")
 
 [node name="Floor" type="StaticBody3D" parent="." unique_id=577226989]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.93655515, 0)

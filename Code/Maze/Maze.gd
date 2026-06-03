@@ -2,15 +2,12 @@ extends Node3D
 class_name Maze
 
 const ROOM = preload("res://Room/Room.tscn")
-const BALL = preload("res://Ball/Ball.tscn")
+@onready var scout: MeshInstance3D = $Scout
 
-@onready var offset: Node3D = $Offset
-@onready var scout: MeshInstance3D = $Offset/Scout
-
-@export var dimensions: Vector2i = Vector2i(4, 4)
+var offset: Vector3
 
 func _ready() -> void:
-	generate(dimensions.x, dimensions.y)
+	generate(6, 6)
 
 func _process(delta: float) -> void:
 	if Input.is_action_pressed("tilt_left"):
@@ -22,16 +19,14 @@ func _process(delta: float) -> void:
 	if Input.is_action_pressed("tilt_back"):
 		rotation_degrees.x += 2.0
 
-## Generate a random "perfect maze" level.
 func generate(columns: int, rows: int):
 	var breadcrumbs: Array[Room] # Grow and shrink. pop_at()
 	var plots_visited: Array[Vector2i] # Only grows.
 	
+	offset.x = (columns - 1) / 2.0
+	offset.z = (rows - 1) / 2.0
 	# FIXME: Double-check
-	var pos: Vector3
-	pos.x = (columns - 1) / 2.0
-	pos.z = (rows - 1) / 2.0
-	offset.position -= pos
+	position -= offset
 	
 	## Stores the 2D grid position.
 	var current_plot: Vector2i = Vector2i(randi_range(0, columns - 1), randi_range(0, rows - 1))
@@ -45,9 +40,9 @@ func generate(columns: int, rows: int):
 	current_room = ROOM.instantiate()
 	current_room.maze = self
 	current_room.plot = current_plot
-	offset.add_child(current_room)
 	current_room.position.x = current_plot.x
 	current_room.position.z = current_plot.y
+	add_child(current_room)
 	breadcrumbs.append(current_room)
 	plots_visited.append(current_plot)
 	scout.position = current_room.position
@@ -98,14 +93,13 @@ func generate(columns: int, rows: int):
 		else:
 			var neighbor_plot: Vector2i = grid_neighbors.pop_at(randi_range(0, grid_neighbors.size() - 1))
 			
-			#var next_room = spawn_room()
 			# FIXME: Next Room Code Dup?
 			var next_room: Room = ROOM.instantiate()
 			next_room.maze = self
 			next_room.plot = neighbor_plot
-			offset.add_child(next_room)
 			next_room.position.x = neighbor_plot.x
 			next_room.position.z = neighbor_plot.y
+			add_child(next_room)
 			breadcrumbs.append(next_room)
 			plots_visited.append(next_room.plot)
 			scout.position = next_room.position
@@ -116,24 +110,20 @@ func generate(columns: int, rows: int):
 			
 			# Increment current room.
 			current_room = next_room
+			
+			
+		
+		#current_room.remove_wall(headed)
+		#current_room = spawn_room(current_plot)
+		#
 	
-	# Drop the ball.
-	var ball = BALL.instantiate()
-	ball.position.y = - 10
-	get_parent().add_child(ball)
-
-
-#func spawn_room():
-	#var next_room: Room = ROOM.instantiate()
-	#next_room.maze = self
-	#next_room.plot = neighbor_plot
-	#offset.add_child(next_room)
-	#next_room.position.x = neighbor_plot.x
-	#next_room.position.z = neighbor_plot.y
-	#breadcrumbs.append(next_room)
-	#plots_visited.append(next_room.plot)
-	#scout.position = next_room.position
-	#print(plots_visited)
+		#
+		## Error checked example of remove wall.
+		#var oposite_direction = oposite_direction(headed)
+		#if oposite_direction == Wall.Direction.NONE:
+			#print("Error! Wall.Direction.NONE")
+			#return
+		#current_room.remove_wall(oposite_direction)
 
 #
 #func spawn_room(plot: Vector2i) -> Room:
