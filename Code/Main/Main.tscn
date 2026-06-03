@@ -1,8 +1,7 @@
 [gd_scene format=3 uid="uid://b1wdu85kwpks7"]
 
 [ext_resource type="Script" uid="uid://b4r8xk7j4j4fv" path="res://Main/Main.gd" id="1_lxy7q"]
-[ext_resource type="PackedScene" uid="uid://cymahi8ut8h1e" path="res://Ball/Ball.tscn" id="2_83ytx"]
-[ext_resource type="PackedScene" uid="uid://cvkd56cc3u2qh" path="res://Maze/Maze.tscn" id="3_amygn"]
+[ext_resource type="Script" uid="uid://cahpkfbsvwv78" path="res://Main/CharacterBody3d.gd" id="4_ps1la"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_amygn"]
 sky_top_color = Color(0.38468674, 0.48833257, 0.27226, 1)
@@ -18,6 +17,10 @@ background_mode = 2
 sky = SubResource("Sky_ps1la")
 tonemap_mode = 2
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6aewd"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ps1la"]
+
 [node name="Main" type="Node" unique_id=1947799888]
 script = ExtResource("1_lxy7q")
 
@@ -32,9 +35,15 @@ environment = SubResource("Environment_6aewd")
 transform = Transform3D(1, 0, 0, 0, 0.12879565, 0.99167126, 0, -0.99167126, 0.12879565, 0, 0, 1.5122008)
 
 [node name="Camera3D" type="Camera3D" parent="Rig" unique_id=2041526354]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.7683716e-07, 11.112061)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.4703484e-07, 7.5068264)
 
-[node name="Ball" parent="." unique_id=293667383 instance=ExtResource("2_83ytx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.753981, 0)
+[node name="CharacterBody3D" type="CharacterBody3D" parent="." unique_id=1344138346]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.108353, 6.5037484, 0)
+visible = false
+script = ExtResource("4_ps1la")
 
-[node name="Maze" parent="." unique_id=1318115514 instance=ExtResource("3_amygn")]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D" unique_id=39065651]
+shape = SubResource("CapsuleShape3D_6aewd")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D" unique_id=1371286969]
+mesh = SubResource("CapsuleMesh_ps1la")

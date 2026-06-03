@@ -8,7 +8,7 @@ size = Vector3(1, 1, 0.1)
 [sub_resource type="BoxMesh" id="BoxMesh_15p2h"]
 size = Vector3(1, 1, 0.1)
 
-[node name="Wall" type="StaticBody3D" unique_id=204456902]
+[node name="Wall" type="StaticBody3D" unique_id=1167197768]
 script = ExtResource("1_11sgl")
 
 [node name="Collider" type="CollisionShape3D" parent="." unique_id=672469134]

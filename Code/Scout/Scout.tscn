@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://52g88o3kw7ta"]
+
+[ext_resource type="Script" uid="uid://8l2hbpgucg4m" path="res://Scout/Scout.gd" id="1_yf3ff"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_381wb"]
+radius = 0.31933594
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d5g1r"]
+albedo_color = Color(0.66896814, 0.26285085, 0.101213776, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_15p2h"]
+radius = 0.267
+
+[node name="Scout" type="Area3D" unique_id=2122440344]
+script = ExtResource("1_yf3ff")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1541922670]
+shape = SubResource("CapsuleShape3D_381wb")
+
+[node name="Graphics" type="MeshInstance3D" parent="." unique_id=1569035529]
+material_override = SubResource("StandardMaterial3D_d5g1r")
+mesh = SubResource("CapsuleMesh_15p2h")

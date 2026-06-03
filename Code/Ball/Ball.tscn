@@ -1,16 +1,18 @@
 [gd_scene format=3 uid="uid://cymahi8ut8h1e"]
 
 [ext_resource type="PackedScene" uid="uid://d2iqffodxxtdw" path="res://Ball/assets/monkey_ball.glb" id="1_cfgdn"]
+[ext_resource type="Script" uid="uid://b8ec806bfjd13" path="res://Ball/Ball.gd" id="1_ov5dl"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_uk1te"]
-radius = 0.4
+radius = 0.3
 
 [sub_resource type="SphereMesh" id="SphereMesh_uk1te"]
-radius = 0.4
-height = 0.8
+radius = 0.33
+height = 0.66
 
 [node name="Ball" type="RigidBody3D" unique_id=293667383]
 can_sleep = false
+script = ExtResource("1_ov5dl")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1558551002]
 shape = SubResource("SphereShape3D_uk1te")
@@ -21,3 +23,4 @@ mesh = SubResource("SphereMesh_uk1te")
 
 [node name="monkey_ball" parent="." unique_id=44303512 instance=ExtResource("1_cfgdn")]
 transform = Transform3D(0.28, 0, 0, 0, 0.28, 0, 0, 0, 0.28, 0, -0.30483365, 0)
+visible = false
