@@ -29,12 +29,18 @@ shadow_enabled = true
 environment = SubResource("Environment_6aewd")
 
 [node name="Rig" type="Node3D" parent="." unique_id=874996498]
-transform = Transform3D(1, 0, 0, 0, 0.5204286, 0.8539053, 0, -0.8539053, 0.5204286, 0, 0, 1.5122008)
+transform = Transform3D(1, 0, 0, 0, 0.12879565, 0.99167126, 0, -0.99167126, 0.12879565, 0, 0, 1.5122008)
 
 [node name="Camera3D" type="Camera3D" parent="Rig" unique_id=2041526354]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 7.101696)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.7683716e-07, 11.112061)
 
 [node name="Ball" parent="." unique_id=293667383 instance=ExtResource("2_83ytx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5248413, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.753981, 0)
 
 [node name="Maze" parent="." unique_id=1318115514 instance=ExtResource("3_amygn")]
+
+[node name="Maze2" parent="." unique_id=1899769081 instance=ExtResource("3_amygn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.34305763, 0, -10.496012)
+
+[node name="Maze3" parent="." unique_id=1277623687 instance=ExtResource("3_amygn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.351547, 0, 0.29287338)

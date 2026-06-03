@@ -5,9 +5,11 @@ const ROOM = preload("res://Room/Room.tscn")
 @onready var scout: MeshInstance3D = $Scout
 
 var offset: Vector3
+var plot_min: int = 2
+var plot_max: int = 8
 
 func _ready() -> void:
-	generate(6, 6)
+	generate(randi_range(plot_min, plot_max), randi_range(plot_min, plot_max))
 
 func _process(delta: float) -> void:
 	if Input.is_action_pressed("tilt_left"):
@@ -26,7 +28,7 @@ func generate(columns: int, rows: int):
 	offset.x = (columns - 1) / 2.0
 	offset.z = (rows - 1) / 2.0
 	# FIXME: Double-check
-	position -= offset
+	#position -= offset
 	
 	## Stores the 2D grid position.
 	var current_plot: Vector2i = Vector2i(randi_range(0, columns - 1), randi_range(0, rows - 1))
@@ -40,8 +42,8 @@ func generate(columns: int, rows: int):
 	current_room = ROOM.instantiate()
 	current_room.maze = self
 	current_room.plot = current_plot
-	current_room.position.x = current_plot.x
-	current_room.position.z = current_plot.y
+	current_room.position.x = current_plot.x - offset.x
+	current_room.position.z = current_plot.y - offset.z
 	add_child(current_room)
 	breadcrumbs.append(current_room)
 	plots_visited.append(current_plot)
@@ -51,7 +53,7 @@ func generate(columns: int, rows: int):
 	
 	# How many times? It's different every time?
 	while plots_visited.size() < total_rooms:
-		await get_tree().create_timer(0.4).timeout
+		await get_tree().create_timer(0.1).timeout
 		
 		# FIXME: Pick a direction.
 		#var headed: Vector2i = current_room.next_direction()
@@ -97,8 +99,8 @@ func generate(columns: int, rows: int):
 			var next_room: Room = ROOM.instantiate()
 			next_room.maze = self
 			next_room.plot = neighbor_plot
-			next_room.position.x = neighbor_plot.x
-			next_room.position.z = neighbor_plot.y
+			next_room.position.x = neighbor_plot.x - offset.x
+			next_room.position.z = neighbor_plot.y - offset.z
 			add_child(next_room)
 			breadcrumbs.append(next_room)
 			plots_visited.append(next_room.plot)
@@ -111,40 +113,3 @@ func generate(columns: int, rows: int):
 			# Increment current room.
 			current_room = next_room
 			
-			
-		
-		#current_room.remove_wall(headed)
-		#current_room = spawn_room(current_plot)
-		#
-	
-		#
-		## Error checked example of remove wall.
-		#var oposite_direction = oposite_direction(headed)
-		#if oposite_direction == Wall.Direction.NONE:
-			#print("Error! Wall.Direction.NONE")
-			#return
-		#current_room.remove_wall(oposite_direction)
-
-#
-#func spawn_room(plot: Vector2i) -> Room:
-	#var room: Room = ROOM.instantiate()
-	#room.maze = self
-	#room.position.x = plot.x
-	#room.position.z = plot.y
-	#add_child(room)
-	#
-	#breadcrumbs.append(room)
-	#plots_visited.append(plot)
-	#scout.position = room.position
-	#return room
-#
-#
-## Validate a new plot (x,y).
-## HACK: testing walls...
-#func find_valid_plot() -> Vector2i:
-	## Return a plot based on remaining walls.
-	##return Vector2i.RIGHT
-	#return Vector2i.LEFT
-	##return Vector2i.UP
-	##return Vector2i.DOWN
-	#
