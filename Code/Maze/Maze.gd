@@ -36,7 +36,6 @@ func generate(columns: int, rows: int):
 	## Stores the 2D grid position.
 	var current_plot: Vector2i = Vector2i(randi_range(0, columns - 1), randi_range(0, rows - 1))
 	var current_room: Room
-	#var total_rooms: int = 6
 	var total_rooms: int = columns * rows
 	
 	# First Random Room
