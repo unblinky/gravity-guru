@@ -11,7 +11,7 @@ var plot_max: int = 8
 func _ready() -> void:
 	generate(randi_range(plot_min, plot_max), randi_range(plot_min, plot_max))
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Input.is_action_pressed("tilt_left"):
 		rotation_degrees.z += 2.0
 	if Input.is_action_pressed("tilt_right"):
@@ -19,6 +19,9 @@ func _process(delta: float) -> void:
 	if Input.is_action_pressed("tilt_forward"):
 		rotation_degrees.x -= 2.0
 	if Input.is_action_pressed("tilt_back"):
+		# FIXME:
+		# What physics engine?
+		# Physics solution for rotating maze?
 		rotation_degrees.x += 2.0
 
 func generate(columns: int, rows: int):
