@@ -14,13 +14,12 @@ func _process(_delta: float) -> void:
 		get_tree().quit()
 	
 	if Input.is_action_just_pressed("start_maze"):
-		if maze == null:
-			start_maze()
-		else:
-			maze.queue_free()
-			start_maze()
+		start_maze()
 
 func start_maze():
+	if maze != null:
+		maze.queue_free()
+	
 	maze = MAZE.instantiate()
 	maze.main = self
 	add_child(maze)

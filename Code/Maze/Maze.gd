@@ -3,10 +3,10 @@ class_name Maze
 
 const BALL = preload("res://Ball/Ball.tscn")
 const ROOM = preload("res://Room/Room.tscn")
-@onready var scout: Scout = $Scout
-
+@onready var scout = $Scout
 
 var main: Main
+var ball: Ball
 var offset: Vector3
 var plot_min: int = 2
 var plot_max: int = 8
@@ -14,7 +14,6 @@ var plot_max: int = 8
 func _ready() -> void:
 	generate(randi_range(plot_min, plot_max), randi_range(plot_min, plot_max))
 
-# TODO: Make physics process?
 func _physics_process(_delta: float) -> void:
 	if Input.is_action_pressed("tilt_left"):
 		rotation_degrees.z += 2.0
@@ -120,6 +119,5 @@ func generate(columns: int, rows: int):
 			# Increment current room.
 			current_room = next_room
 	
-	var ball = BALL.instantiate()
-	ball.position.y = 10 # 10 meters up.w
+	ball = BALL.instantiate()
 	main.add_child(ball)

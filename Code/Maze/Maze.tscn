@@ -25,5 +25,4 @@ mesh = SubResource("CapsuleMesh_d5g1r")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, 2.5)
 mesh = SubResource("CapsuleMesh_d5g1r")
 
-[node name="Scout" parent="." unique_id=1569035529 instance=ExtResource("2_15p2h")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.65541935, 0)
+[node name="Scout" parent="." unique_id=2122440344 instance=ExtResource("2_15p2h")]

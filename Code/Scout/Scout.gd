@@ -8,6 +8,5 @@ func _ready() -> void:
 	body_entered.connect(on_body_entered)
 
 func on_body_entered(body):
-	# FIXME: What happens when we reach the goal.
-	# IF BALL.
-	maze.main.start_maze()
+	if body is Ball:
+		maze.main.start_maze()
